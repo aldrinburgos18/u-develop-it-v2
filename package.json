@@ -1,0 +1,30 @@
+{
+  "name": "u-develop-it-v2",
+  "version": "2.0.0",
+  "description": "The back end for a voting application by a group called U Develop It.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "jest",
+    "migrate": "sqlite3 db/election.db < db/schema.sql",
+    "seed": "sqlite3 db/election.db < db/seeds.sql",
+    "db": "sqlite3 db/election.db"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aldrinburgos18/u-develop-it-v2.git"
+  },
+  "author": "Aldrin Burgos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aldrinburgos18/u-develop-it-v2/issues"
+  },
+  "homepage": "https://github.com/aldrinburgos18/u-develop-it-v2#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
+}
