@@ -53,7 +53,7 @@ app.get("/api/candidates/:id", (req, res) => {
 
     res.json({
       message: "success",
-      data: row,
+      data: row || "Candidate does not exist.",
     });
   });
 });
@@ -69,7 +69,7 @@ app.delete("/api/candidates/:id", (req, res) => {
     }
 
     res.json({
-      message: "Successfully deleted!",
+      message: "Candidate deleted successfully.",
       changes: this.changes,
     });
   });
@@ -101,6 +101,52 @@ app.post("/api/candidates", ({ body }, res) => {
       data: body,
       id: this.lastID,
     });
+  });
+});
+
+//get all parties
+app.get("/api/parties", (req, res) => {
+  const sql = `SELECT * FROM parties`;
+  const params = [];
+  db.all(sql, params, (err, rows) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
+
+    res.json({
+      message: "success",
+      data: rows,
+    });
+  });
+});
+
+//get a single party
+app.get("/api/parties/:id", (req, res) => {
+  const sql = `SELECT * FROM parties WHERE id = ?`;
+  const params = [req.params.id];
+  db.get(sql, params, (err, row) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
+    res.json({
+      message: "Success",
+      data: row || "Party does not exist.",
+    });
+  });
+});
+
+//delete a party
+app.delete("/api/parties/:id", (req, res) => {
+  const sql = `DELETE FROM parties WHERE id = ?`;
+  const params = [req.params.id];
+  db.run(sql, params, function (err, result) {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.json({ message: "Party deleted successfully.", changes: this.changes });
   });
 });
 
