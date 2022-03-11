@@ -30,8 +30,7 @@ router.get("/candidates/:id", (req, res) => {
                  LEFT JOIN parties
                  ON candidates.party_id = parties.id
                  WHERE candidates.id = ?`;
-  const params = [req.params.id];
-  db.get(sql, params, (err, row) => {
+  db.get(sql, req.params.id, (err, row) => {
     if (err) {
       res.status(400).json({ error: err.message });
       return;
@@ -47,8 +46,7 @@ router.get("/candidates/:id", (req, res) => {
 //delete a candidate
 router.delete("/candidates/:id", (req, res) => {
   const sql = `DELETE FROM candidates WHERE id =?`;
-  const params = [req.params.id];
-  db.run(sql, params, function (err, result) {
+  db.run(sql, req.params.id, function (err, result) {
     if (err) {
       res.status(400).json({ error: res.message });
       return;
@@ -83,7 +81,7 @@ router.post("/candidates", ({ body }, res) => {
       return;
     }
     res.json({
-      message: "success",
+      message: "Candidate created successfully.",
       data: body,
       id: this.lastID,
     });
@@ -107,7 +105,7 @@ router.put("/candidates/:id", (req, res) => {
     }
 
     res.json({
-      message: "Candidate's party successfully updated!",
+      message: "Candidate's party updated successfully.",
       data: req.body,
       changes: this.changes,
     });

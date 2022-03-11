@@ -23,16 +23,15 @@ router.get("/voters", (req, res) => {
 //get a single voter
 router.get("/voters/:id", (req, res) => {
   const sql = `SELECT * FROM voters WHERE id = ?`;
-  const params = [req.params.id];
 
-  db.get(sql, params, (err, rows) => {
+  db.get(sql, req.params.id, (err, rows) => {
     if (err) {
       res.status(400).json({ error: err.message });
       return;
     }
     res.json({
       message: "success",
-      data: rows,
+      data: rows || "Voter does not exist.",
     });
   });
 });
@@ -55,9 +54,45 @@ router.post("/voters/", ({ body }, res) => {
       return;
     }
     res.json({
-      message: "Voter successfully created",
+      message: "Voter created successfully.",
       data: body,
       id: this.lastID,
+    });
+  });
+});
+
+//update a voter's email
+router.put("/voters/:id", (req, res) => {
+  const errors = inputCheck(req.body, "email");
+  if (errors) {
+    res.status(400).json({ error: err.errors });
+    return;
+  }
+
+  const sql = `UPDATE voters SET email = ? WHERE id = ?`;
+  const params = [req.body.email, req.body.id];
+  db.run(sql, params, function (err, data) {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.json({
+      message: "Voter's email updated successfully.",
+    });
+  });
+});
+
+//delete a voter
+router.delete("/voters/:id", (req, res) => {
+  const sql = `DELETE FROM voters WHERE id = ?`;
+  db.run(sql, req.params.id, function (err, result) {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.json({
+      message: "Voter deleted successfully.",
+      changes: this.changes,
     });
   });
 });
