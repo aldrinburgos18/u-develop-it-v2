@@ -30,7 +30,7 @@ router.get("/voters/:id", (req, res) => {
       return;
     }
     res.json({
-      message: "success",
+      message: "Success",
       data: rows || "Voter does not exist.",
     });
   });

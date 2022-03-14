@@ -17,7 +17,7 @@ router.get("/candidates", (req, res) => {
     }
 
     res.json({
-      message: "success",
+      message: "Success",
       data: rows,
     });
   });
@@ -37,7 +37,7 @@ router.get("/candidates/:id", (req, res) => {
     }
 
     res.json({
-      message: "success",
+      message: "Success",
       data: row || "Candidate does not exist.",
     });
   });

@@ -12,7 +12,7 @@ router.get("/parties", (req, res) => {
     }
 
     res.json({
-      message: "success",
+      message: "Success",
       data: rows,
     });
   });
